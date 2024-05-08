@@ -3,12 +3,14 @@
 import { useFormState } from "react-dom";
 import { updateUser } from "@/lib";
 import { FormSubmitButton } from "./FormSubmitButton";
+import { FormResultMessage } from "./FormResultMessage";
+import { LoadingIndicator } from "./LoadingIndicator";
 
-export default function UpdateNameForm({ name }: {name?: string}) {
+export default function UpdateNameForm({ name }: { name?: string }) {
     const [formState, formAction] = useFormState<{
-      success?: boolean;
-      message?: string;
-      timestamp?: number;
+        success?: boolean;
+        message?: string;
+        timestamp?: number;
     }>(updateUser, {});
 
     return (
@@ -27,6 +29,14 @@ export default function UpdateNameForm({ name }: {name?: string}) {
                 ></input>
 
                 <FormSubmitButton />
+
+                <LoadingIndicator />
+
+                <FormResultMessage
+                    message={formState.message}
+                    resultSuccess={formState.success}
+                    timestamp={formState.timestamp}
+                />
             </div>
         </form>
     );
